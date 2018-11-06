@@ -1,0 +1,16 @@
+package com.ruicaiedu.bookstore.dao;
+
+import com.ruicaiedu.bookstore.domain.Exchange_record;
+import com.ruicaiedu.bookstore.domain.Score_exchange;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+
+public interface Score_exchangedao {
+	/*----------周虎开始----------*/
+	//添加商品换购
+	 public boolean AddScore_exchange_record(Userinfo userinfo,Score_exchange score_exchange);
+	 //换购商品所化积分
+	 public int selectScore_exchange(Score_exchange score_exchange);
+	 //用户进行商品兑换操作 dxp新添加
+	 public boolean AddScore_exchange(Userinfo userinfo,Score_exchange score_exchange);//dxp新添加
+	 /*----------周虎结束----------*/
+}

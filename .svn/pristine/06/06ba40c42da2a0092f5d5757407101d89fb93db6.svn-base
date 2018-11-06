@@ -1,0 +1,11 @@
+/*弹出层的STYLE*/
+html,body {
+	height: 100%;
+	margin: 0px;
+	font-size: 12px;
+}
+#testpace tr td{
+	
+	padding-bottom: 10px;
+	padding-top: 10px;
+}

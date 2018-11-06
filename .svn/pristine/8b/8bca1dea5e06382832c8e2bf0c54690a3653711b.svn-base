@@ -1,0 +1,90 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.domain.Orders;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+@WebServlet("/User_myorder_ManageServlet")
+public class User_myorder_ManageServlet extends HttpServlet {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+Bookstorservicedao bookstorservicedao =null;
+	
+	public User_myorder_ManageServlet() {
+		super();
+	}
+
+
+	public void destroy() {
+		super.destroy(); 
+	}
+
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String basePath=request.getServletContext().getContextPath();
+	int opt=0;
+	if(request.getParameter("opt")!=null){
+		opt=Integer.parseInt(request.getParameter("opt"));		
+	}
+	String ordersid="";
+			
+	if(request.getParameter("ordersid")!=null){
+		ordersid=request.getParameter("ordersid");
+	}
+    bookstorservicedao=new Bookstorserviceimpl();
+    
+    if(opt!=0){//查看  评价 单个删除 选择
+    	
+    	  switch(opt){
+    	    case 1:
+    	    	//转到订单详情页面（暂时没有该显示页面）	
+    	    	//写一个订单详情的servlet，共享订单数据到订单详情页面
+    	    	
+    	    break;
+    	    case 2:
+    	    	//没有订单评价表，需重新建立，并实现底层方法！！暂时不做
+    	    	
+    	        break;
+    	    case 3:
+    	    	Orders orders=new Orders();
+    	    	orders.setOrdersid(request.getParameter("ordersid"));
+    	    	if(bookstorservicedao.deleteOrders(orders)){
+    	    		request.getRequestDispatcher(basePath.concat("/User_myorderServlet")).forward(request, response);
+    	    	}else{request.getRequestDispatcher(basePath.concat("/User_myorderServlet")).forward(request, response);}
+    	        break;
+    	    default:
+    	        break;
+    	    
+    	    }
+    
+    } else if(ordersid!=""){//批量删除
+    	
+    	if(bookstorservicedao.deleteBatch(ordersid)){
+    		
+    		request.getRequestDispatcher("User_myorderServlet").forward(request, response);
+       	}
+    }
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+doGet(request, response);
+	}
+
+	
+	public void init() throws ServletException {
+		// Put your code here
+	}
+
+}

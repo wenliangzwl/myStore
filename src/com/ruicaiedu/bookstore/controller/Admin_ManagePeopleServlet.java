@@ -1,0 +1,71 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.domain.Assorter_right;
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+@WebServlet("/Admin_ManagePeopleServlet")
+public class Admin_ManagePeopleServlet extends HttpServlet {
+	private Bookstorservicedao sBookstorservicedao = new Bookstorserviceimpl();
+	private String adminname;
+	private Assorter_right assorter_right;
+	public Admin_ManagePeopleServlet() {
+		super();
+	}
+
+	/**
+	 * Destruction of the servlet. <br>
+	 */
+	public void destroy() {
+		super.destroy(); // Just puts "destroy" string in log
+		// Put your code here
+	}
+
+	/**
+	 * The doGet method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to get.
+	 * 
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {	
+		adminname = request.getParameter("adminname");
+		assorter_right=new Assorter_right();
+		assorter_right.setAdminname(adminname);
+		//共享数据
+		request.setAttribute("assorter_right", sBookstorservicedao.selectassorter_right(assorter_right));
+		//转发显示页面
+		request.getRequestDispatcher("admin_MemberInfo.jsp").forward(request, response);
+	}
+
+	
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	/**
+	 * Initialization of the servlet. <br>
+	 *
+	 * @throws Servl
+	 * etException if an error occurs
+	 */
+	public void init() throws ServletException {
+		// Put your code here
+	}
+
+}

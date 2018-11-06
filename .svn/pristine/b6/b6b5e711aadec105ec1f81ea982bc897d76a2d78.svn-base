@@ -1,0 +1,68 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+
+
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.domain.Comment;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+
+@WebServlet("/BookDetailServlet")
+public class BookDetailServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private Bookstorservicedao bookstorservicedao;
+	private Bookinfo bookinfo;
+	Comment comment=null;
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		bookstorservicedao = new Bookstorserviceimpl();
+		bookinfo = new Bookinfo();
+		Userinfo userinfo=null;
+		String bookid = request.getParameter("bookid");
+		bookinfo.setBookid(bookid);
+		if(bookstorservicedao.selectbookinfodetails(bookinfo)!=null){
+			
+			request.setAttribute("bookinfo", bookinfo);
+			//-----------------dxp新加 开始--------------------
+		    int pageIndex=1;
+		       if(request.getParameter("pageIndex")!=null){
+		    	   pageIndex=Integer.parseInt(request.getParameter("pageIndex"));
+		       }	   
+		   userinfo=(Userinfo)request.getSession().getAttribute("userinfo");
+	       request.setAttribute("comments",bookstorservicedao.selectComment(userinfo, 5));
+	       request.setAttribute("pageIndex", pageIndex);
+	       request.setAttribute("totalpage",bookstorservicedao.getTotalPage(bookstorservicedao.selectComment(userinfo), 5));
+			
+			//---------------------dxp新加 结束--------------------
+			request.getRequestDispatcher("/customer/bookDetail.jsp").forward(request, response);
+			
+		}else{
+			response.sendRedirect("index.jsp");
+		}
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	public void init() throws ServletException {
+		// Put your code here
+	}
+
+}

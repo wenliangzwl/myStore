@@ -1,0 +1,30 @@
+package com.ruicaiedu.bookstore.dao;
+
+import java.util.List;
+
+import com.ruicaiedu.bookstore.domain.Assorter_right;
+import com.ruicaiedu.bookstore.domain.Orders;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+
+public interface Ordersdao {
+	/*----------徐炳艳开始----------*/
+	//用户订单查询订单记录分页扎实
+	public List<Orders> selectOrdersUserinfolist(int pag,Userinfo userinfo);
+	//管理员订单分页展示
+	public List<Orders> selectOrdersAssorter_rightlist(int pag,Assorter_right assorter_right);
+	//用户订单添加
+	public boolean addOrdersuserinfo(Userinfo userinfo,Orders orders);
+	//管理员点单添加
+	public boolean addOrdersassorter_right(Assorter_right assorter_right,Ordersdao orders);
+	//管理员修改订单
+	public boolean updateOrders(Orders orders,String state);
+	//删除订单
+	public boolean deleteOrdersAssorter_right(Orders orders);
+	 //用户删除订单   dxp新添加
+	public int deleteOrdersUserinfo(Orders orders);  //orders 只放主键
+	//前台分页页数
+	public int selectOrdersuserinfopages(Userinfo userinfo);
+	//后台分页查询也页数
+	public int selectOrdersAssorter_rightpages(Assorter_right assorter_right);
+	/*----------徐炳艳结束----------*/
+}

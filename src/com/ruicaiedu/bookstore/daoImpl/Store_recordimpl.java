@@ -1,0 +1,202 @@
+package com.ruicaiedu.bookstore.daoImpl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ruicaiedu.bookstore.dao.Store_recorddao;
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.domain.Store_record;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.factory.Boookstorfactory;
+import com.ruicaiedu.bookstore.util.DBhelper;
+import com.ruicaiedu.bookstore.util.Document;
+
+public class Store_recordimpl implements Store_recorddao {
+	public Connection connection;
+	public PreparedStatement pstm;
+	public ResultSet rs;
+	public Store_record store_record;
+	public List<Store_record> list;
+    Bookinfo bookinfo=null;
+	//public final static String STORE_RECORDIMPL_SELECTSTORE_RECORD="select * from store_record where userid=? bookid=?";
+	@Override//查询是否收藏
+	public boolean selectStore_record(Userinfo userinfo, Bookinfo bookinfo) {
+		connection=DBhelper.getConnection();
+		try {
+			pstm=connection.prepareStatement(Document.STORE_RECORDIMPL_SELECTSTORE_RECORD);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setString(2, bookinfo.getBookid());
+			rs=pstm.executeQuery();
+			if(rs.next()){
+				return true;
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	@Override//收藏夹分页展示    dxp修改9月28日
+	//public final static String STORE_RECORDIMPL_SELECTBOOKINFOS="SELECT s.*,b.* from store_record s,bookinfo b WHERE s.bookid=b.bookid and s.bookid in (SELECT bookid from store_record s,userinfo u WHERE u.userid=s.userid and s.userid=?); 
+	public List<Store_record> selectBookinfos(Userinfo userinfo, int pag) {
+		connection = DBhelper.getConnection();
+		store_record=new Store_record();
+		list = new ArrayList<Store_record>();
+		try {
+			pstm = connection.prepareStatement(Document.STORE_RECORDIMPL_SELECTBOOKINFOS);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setInt(2, (pag-1)*3);
+			rs = pstm.executeQuery();
+			while(rs.next()){
+				store_record= new Store_record();
+				store_record.setBookid(rs.getString("bookid"));
+				store_record.setStoreid(rs.getInt("storeid"));
+				store_record.setStoretime(rs.getString("storetime"));
+				userinfo=new Userinfo();
+				userinfo.setUserid(rs.getInt("userid"));
+			    store_record.setUserinfo(userinfo);				
+			    bookinfo=new Bookinfo();
+			    bookinfo.setBookid(rs.getString("bookid"));
+				bookinfo.setBookname(rs.getString("bookname"));
+				bookinfo.setBookprice(rs.getDouble("bookprice"));
+				bookinfo.setDiscountprice(rs.getDouble("discountprice"));
+				bookinfo.setBookimg(rs.getString("bookimg"));
+				bookinfo.setBookdetails(rs.getString("bookdetails"));
+				bookinfo.setDiscount(rs.getDouble("discount"));
+				bookinfo.setState(rs.getString("state"));
+				bookinfo.setBtype(rs.getString("btype"));
+				bookinfo.setDeadline(rs.getString("deadline"));
+				bookinfo.setMajor(rs.getString("major"));
+				bookinfo.setGrade(rs.getInt("grade"));
+				bookinfo.setAuthor(rs.getString("author"));
+				bookinfo.setPress(rs.getString("press"));
+				bookinfo.setPresstime(rs.getString("presstime"));
+				bookinfo.setIsbn(rs.getString("isbn"));
+				bookinfo.setScore(rs.getInt("score"));
+				store_record.setBookinfo(bookinfo);
+				list.add(store_record);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	//public final static String STORE_RECORDIMPL_DELETEBOOKINFOS="delete from store_record where userid=? bookid=?";
+	@Override//删除收藏夹书籍
+	public boolean deleteBookinfo(Userinfo userinfo, Bookinfo bookinfo) {
+		connection=DBhelper.getConnection();
+		try {
+			pstm = connection.prepareStatement(Document.STORE_RECORDIMPL_DELETEBOOKINFOS);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setString(2, bookinfo.getBookid());
+			
+			if(pstm.executeUpdate()>0){
+				return true;
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	//public final static String STORE_RECORDIMPL_ADDBOOKINFO="insert into store_record(bookid,userid) values(?,?)";
+	@Override//添加收藏夹   //0930dxp 修改
+	public boolean addBookinfo_StoreRecord(Userinfo userinfo, Bookinfo bookinfo) {
+		connection= DBhelper.getConnection();
+		try {
+			pstm = connection.prepareStatement(Document.STORE_RECORDIMPL_ADDBOOKINFO);
+			
+			pstm.setString(1,bookinfo.getBookid());
+			pstm.setInt(2,userinfo.getUserid());
+			
+			if(pstm.executeUpdate()>0){
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+//SELECT s.*,b.* from store_record s,bookinfo b WHERE s.bookid=b.bookid and s.bookid in (SELECT bookid from store_record s,userinfo u WHERE u.userid=s.userid and s.userid=?);	
+	@Override//查询收藏夹中所有的书籍信息 dxp新添加
+	public List<Store_record> seleStore_recordBookinfo(Userinfo userinfo) {
+		
+		connection = DBhelper.getConnection();		
+		
+		try {
+			pstm = connection.prepareStatement(Document.STORE_RECORDIMPL_SELESTORE_RECORDBOOKINFO);
+			pstm.setInt(1, userinfo.getUserid());
+			rs = pstm.executeQuery();
+			list=new ArrayList<Store_record>();
+			while(rs.next()){
+				store_record= new Store_record();
+				store_record.setBookid(rs.getString("bookid"));
+				store_record.setStoreid(rs.getInt("storeid"));
+				store_record.setStoretime(rs.getString("storetime"));
+				userinfo=new Userinfo();
+				userinfo.setUserid(rs.getInt("userid"));
+			    store_record.setUserinfo(userinfo);	
+			    bookinfo=new Bookinfo();
+			    bookinfo.setBookid(rs.getString("bookid"));
+				bookinfo.setBookname(rs.getString("bookname"));
+				bookinfo.setBookprice(rs.getDouble("bookprice"));
+				bookinfo.setDiscountprice(rs.getDouble("discountprice"));
+				bookinfo.setBookimg(rs.getString("bookimg"));
+				bookinfo.setBookdetails(rs.getString("bookdetails"));
+				bookinfo.setDiscount(rs.getDouble("discount"));
+				bookinfo.setState(rs.getString("state"));
+				bookinfo.setBtype(rs.getString("btype"));
+				bookinfo.setDeadline(rs.getString("deadline"));
+				bookinfo.setMajor(rs.getString("major"));
+				bookinfo.setGrade(rs.getInt("grade"));
+				bookinfo.setAuthor(rs.getString("author"));
+				bookinfo.setPress(rs.getString("press"));
+				bookinfo.setPresstime(rs.getString("presstime"));
+				bookinfo.setIsbn(rs.getString("isbn"));
+				bookinfo.setScore(rs.getInt("score"));
+			    store_record.setBookinfo(bookinfo);
+			    list.add(store_record);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return list;
+	}
+	//public final static String STORE_RECORDIMPL_ADDBOOKINFO="insert into store_record(bookid,userid) values(?,?)";
+		@Override//添加收藏夹
+		public boolean addBookinfo(Userinfo userinfo, Bookinfo bookinfo) {
+			connection= DBhelper.getConnection();
+			try {
+				pstm = connection.prepareStatement(Document.STORE_RECORDIMPL_ADDBOOKINFO);
+				pstm.setString(1,bookinfo.getBookid());
+				pstm.setInt(2,userinfo.getUserid());
+				
+				if(pstm.executeUpdate()>0){
+					return true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+}

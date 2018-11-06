@@ -1,0 +1,56 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+@WebServlet("/QueryListServlet")
+public class QueryListServlet extends HttpServlet {
+	private int grade;
+	private Bookstorservicedao sBookstorservicedao = new Bookstorserviceimpl();
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			doPost(request, response);	
+	}
+
+	
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		grade =1;
+		Bookinfo bookinfo = new Bookinfo();
+		if(request.getParameter("grade")!=null){
+			bookinfo.setGrade(Integer.parseInt(request.getParameter("grade")));
+		}
+		int page = 1;
+		if(request.getParameter("page")!=null){//不是第一页
+			page= Integer.parseInt(request.getParameter("page"));
+		}
+		System.out.println(page);//当前页
+		int count = 12;
+		//共享当前的grade
+		request.setAttribute("grade",grade);
+		//System.out.println(sBookstorservicedao.selectBookinfolist(bookinfo, page, count));
+		//共享查询到的数据
+		request.setAttribute("bookinfos",sBookstorservicedao.selectBookinfolist(bookinfo, page, count));
+		//共享当前的页数;
+		request.setAttribute("page",page );
+		//共享总页数
+		request.setAttribute("pages",sBookstorservicedao.seleBookinfospage(bookinfo, 12));
+		//跳转页面
+		request.getRequestDispatcher("customer/queryList.jsp").forward(request, response);
+	}
+
+	
+	public void init() throws ServletException {
+		
+	}
+
+}

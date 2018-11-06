@@ -1,0 +1,39 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+@WebServlet("/Admin_ScoreExchangeInfoServlet")
+public class Admin_ScoreExchangeInfoServlet extends HttpServlet {
+	private Bookstorservicedao bookstorservicedao;
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int page=1;
+		if(request.getParameter("page")!=null){//说明有值传过来
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		bookstorservicedao= new Bookstorserviceimpl();
+		
+		//共享积分兑换商品信息
+		request.setAttribute("score_exchangeinfo", bookstorservicedao.selectScore_exchangeinfo(page));
+		request.getRequestDispatcher("admin_ScoreExchangeInfo.jsp").forward(request, response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	public void init() throws ServletException {
+	}
+
+}

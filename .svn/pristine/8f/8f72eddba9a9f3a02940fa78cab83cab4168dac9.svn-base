@@ -1,0 +1,99 @@
+package com.ruicaiedu.bookstore.daoImpl;
+
+import java.security.interfaces.RSAKey;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.ruicaiedu.bookstore.dao.Score_exchangedao;
+import com.ruicaiedu.bookstore.domain.Exchange_record;
+import com.ruicaiedu.bookstore.domain.Score_exchange;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.util.DBhelper;
+import com.ruicaiedu.bookstore.util.Document;
+
+public class Score_exchangeimpl implements Score_exchangedao {
+	private PreparedStatement pstm;
+	private Score_exchange score_exchange; 
+	private ResultSet rs;
+	private Connection connection=null; 
+	//添加商品换购
+	@Override
+	public boolean AddScore_exchange_record(Userinfo userinfo,
+			Score_exchange score_exchange) {
+		//String sql = "insert into score_exchange(score,name,exchangename,description,exchangetype) values(?,?,?,?,?)";
+		connection=DBhelper.getConnection();
+		try {
+			pstm = connection.prepareStatement(Document.SCORE_EXCHANGEIMPL_ADDSCORE_EXCHANGE_RECORD);
+			pstm.setInt(1,score_exchange.getScore());
+			pstm.setString(2,score_exchange.getUserinfo().getNickname());
+			pstm.setString(3, score_exchange.getExchangename());
+			pstm.setString(4,score_exchange.getDescription());
+			pstm.setString(5,score_exchange.getExchangetype());
+			if(pstm.executeUpdate()>0){
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	//换购商品所化积分
+	@Override
+	public int selectScore_exchange(Score_exchange score_exchange) {
+		//String sql = "select score from score_exchange where exchangename=?";
+		connection = DBhelper.getConnection();
+		try {
+			pstm = connection.prepareStatement(Document.SCORE_EXCHANGEIMPL_SELECTSCORE_EXCHANGE);
+			pstm.setString(1, score_exchange.getExchangename());
+			rs = pstm.executeQuery();
+			if(rs.next()){
+				return rs.getInt("score");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	//用户进行商品兑换操作  dxp新添加
+	//insert into score_exchange(score,name,exchangename,description,exchangetype)values(?,?,?,?,?);
+		@Override
+	public boolean AddScore_exchange(Userinfo userinfo,Score_exchange score_exchange) {
+		connection=DBhelper.getConnection();
+		try {
+			pstm=connection.prepareStatement(Document.SCORE_EXCHANGEIMPL_ADDSCORE_EXCHANGE);
+			pstm.setInt(1, score_exchange.getScore());
+			pstm.setString(2, userinfo.getUsername());
+			pstm.setString(3, score_exchange.getExchangename());
+			pstm.setString(4, score_exchange.getDescription());
+			pstm.setString(5, score_exchange.getExchangetype());
+			if(pstm.executeUpdate()>0){
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return false;
+		}
+}

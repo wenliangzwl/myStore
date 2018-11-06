@@ -1,0 +1,106 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.domain.Score_exchange;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+
+
+@WebServlet("/User_exchangeArea_ManageServlet")
+public class User_exchangeArea_ManageServlet extends HttpServlet {
+	Bookstorservicedao bookstorservicedao=null;
+	Score_exchange score_exchange=null;
+	Bookinfo bookinfo=null;
+	Userinfo userinfo =null;
+	public User_exchangeArea_ManageServlet() {
+		super();
+	}
+
+	public void destroy() {
+		super.destroy(); 
+		
+	}
+
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+		 	throws ServletException, IOException {
+bookstorservicedao=new Bookstorserviceimpl();
+String basePath=request.getServletContext().getContextPath();
+int opt=0;
+if(request.getParameter("opt")!=null){
+	opt=Integer.parseInt(request.getParameter("opt"));
+}		
+switch (opt) {
+case 1:
+	
+	String bookid=request.getParameter("bookid");
+	bookinfo=new Bookinfo();
+	bookinfo.setBookid(bookid);
+	request.setAttribute("bookinfor",bookstorservicedao.selectbookinfodetails(bookinfo));
+	request.getRequestDispatcher(basePath.concat("/customer/user_exchangeArea_exchange.jsp")).forward(request, response);	
+	break;
+case 2:
+	 int pageIndex=1;
+     if(request.getParameter("pageIndex")!=null){
+  	   pageIndex=Integer.parseInt(request.getParameter("pageIndex"));
+     }	   
+	String  exchangename= request.getParameter("name");
+	bookinfo=new Bookinfo();
+	bookinfo.setBookid(request.getParameter("bookid"));
+	bookinfo=bookstorservicedao.selectbookinfodetails(bookinfo);
+	score_exchange=new Score_exchange();
+	score_exchange.setExchangename(exchangename);
+	score_exchange.setDescription(bookinfo.getBookdetails());
+	score_exchange.setScore(bookinfo.getScore());
+	score_exchange.setExchangetype(bookinfo.getBtype());
+	userinfo=(Userinfo)request.getSession().getAttribute("userinfo");
+	score_exchange.setUserinfo(userinfo);
+	request.setAttribute("pageIndex", pageIndex);
+	if(bookstorservicedao.AddScore_exchange(userinfo,score_exchange)){
+	
+	if(bookstorservicedao.AddScore_exchange_record(userinfo, score_exchange)){
+      request.setAttribute("exchange_Records", bookstorservicedao.selectExchange_records(userinfo, pageIndex));
+	  request.setAttribute("totalpage",bookstorservicedao.getExchange_RecordTotalpage(userinfo, 5));
+	  request.getRequestDispatcher(basePath.concat("/customer/user_exchangeArea_exchangeRecord.jsp")).forward(request, response);
+	}
+	
+	}else{
+     response.sendRedirect(basePath.concat("/User_exchangeAreaServlet"));		
+	}
+    
+	break;
+default:
+	response.sendRedirect(basePath.concat("/User_exchangeAreaServlet"));	
+	break;
+}
+
+
+
+
+		
+		
+		
+	}
+
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+       doGet(request, response);
+	}
+
+	
+	public void init() throws ServletException {
+		// Put your code here
+	}
+
+}

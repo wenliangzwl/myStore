@@ -1,0 +1,453 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+
+body {
+	font-size: 12px;
+	font-family: "微软雅黑";
+	color: #5e5e5e;
+	background: #fff;
+	overflow-x: hidden;
+	-webkit-backface-visibility: hidden;
+}
+
+/*右侧悬浮导航*/
+.float{width:111px;height:224px;position:fixed;_position:absolute;display:none;overflow:hidden;right:0%; z-index:50}/*left50%确保页面中间，左边距515大于页面内容的一半，确保在内容整体右侧外*/
+.float a{display:block;height:22px; width:80px;padding-left:10px; font-size:medium;margin-top: 5px;padding-top: 7px;}
+
+ul,li,form,input,a,span,div,h1,h2,h3,h4,h5,h6,body,table,textarea,p,dl,dt,dd
+	{
+	margin: 0;
+	padding: 0;
+}
+
+ul,li {
+	list-style: none;
+}
+
+table {
+	cellspacing: 0px;
+	cellpadding: 0px;
+	border-spacing: 0px;
+}
+
+img {
+	border: none;
+	vertical-align: middle;
+}
+
+input {
+	font-family: "微软雅黑";
+	border: none;
+}
+
+input:focus {
+	outline: none;
+	background-image: none;
+	border-color: #ccc;
+}
+
+input[type=button] {
+	cursor: pointer;
+}
+
+textarea {
+	resize: none;
+	outline: none;
+	font-family: monospace;
+}
+
+a {
+	text-decoration: none;
+	color: #393737;
+}
+
+a:hover {
+	color: #F00;
+}
+
+/**解决浮动后div不自动撑开**/
+div:after,ul:after,li:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0px;
+	visibility: hidden;
+}
+
+div,ul,li { *
+	display: inline-block;
+	zoom: 1;
+}
+
+.clearfloat {
+	font-size: 0px;
+	line-height: 0px;
+	float: none;
+	clear: both;
+	display: block;
+	height: 0px; +
+	height: auto;
+}
+
+.red {
+	color: #F00;
+	font-family: "NSimSun";
+}
+
+
+
+.footer {
+	width: 100%;
+	margin-top: 30px;
+	border-top: 6px solid #ee0a15;
+}
+
+.footer .footer_t {
+	background-color: #fafafa;
+	border-bottom: 1px solid #ebebeb;
+	width: 100%;
+	text-align: center;
+}
+
+.footer .footer_t ul {
+	width: 908px;
+	margin: 0 auto;
+	padding: 7px 0;
+}
+
+.footer .footer_t ul li {
+	width: 130px;
+	height: 52px;
+	float: left;
+	padding: 0 48px;
+	display: inline;
+	border-right: 1px solid #dedede;
+}
+
+.footer .footer_t ul li.last {
+	border-right: none;
+}
+
+.footer_b {
+	width: 925px;
+	padding-left: 40px;
+	height: 140px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+.footer_b .footer_b1 {
+	padding-left:20px;
+	width: 154px;
+	float: left;
+}
+
+.footer_b .footer_b1 .f_title {
+	display: block;
+	background: url(../images/public_footer_title5.png) 0 1px no-repeat;
+	padding-left: 41px;
+	font-size: 16px;
+	color: #7d7d7d;
+	height: 36px;
+	line-height: 36px;
+}
+
+.footer_b .footer_b1 ul {
+	padding-left: 43px;
+}
+
+.footer_b .footer_b1 ul li {
+	line-height: 20px;
+	height: 20px;
+	background: url(../images/f_dot.jpg) no-repeat left center;
+	padding-left: 10px;
+}
+
+.footer_b .footer_b1 ul li a {
+	text-decoration: none;
+	color: #7d7d7d;
+	font-size: 12px;
+}
+
+.footer_b .tb2 .f_title {
+	background-position: 0px -39px;
+}
+
+.footer_b .tb3 .f_title {
+	background-position: 0 -79px;
+}
+
+.footer_b .tb4 .f_title {
+	background-position: 0px -118px;
+}
+
+.footer_b .tb5.f_title {
+	background-position: 0px -158px;
+}
+
+.footer_b .tb6 .f_title {
+	background-position: 0px -200px;
+}
+
+.footer_m {
+	border-top: 1px solid #ebebeb;
+	width: 100%;
+	padding: 17px 0 50px;
+	color: #8c8c8c;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.footer_nav {
+	text-align: center;
+	line-height: 20px;
+	padding-bottom: 17px;
+}
+
+.footer_nav a {
+	color: #666666;
+	padding: 0 14px;
+}
+
+.footer_copyright {
+	color: #666666;
+	text-align: center;
+	width: 100%;
+}
+
+
+
+
+/*-------------------------------------------------------------------------*/
+/*user*/
+.user_top {
+	width: 100%;
+	height: 54px;
+	line-height: 54px;
+}
+
+.user_c {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.user_top_l {
+	clear: left;
+	width: 220px;
+	float: left;
+	color: #595757;
+	margin-left: 100px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+/*background-color: #CCCCCC;*/
+height: 20px;
+}
+
+.user_top .user_top_l a {
+	display: inline-block;
+	color: #f90101;
+	padding-right: 14px;
+}
+
+.user_top .user_top_l a:hover {
+	text-decoration: underline;
+}
+
+.user_top .user_top_r {
+	width: 50%;
+	float: left;
+	text-align: right;
+}
+
+.user_top .user_top_r ul li {
+	float: right;
+	margin-left: 80px;
+	display: inline;
+}
+
+.user_top .user_top_r ul li a {
+	color: #595757;
+}
+
+.user_top .user_top_r ul li a:hover {
+	color: #ff2832;
+}
+
+.user_nav {
+	width: 100%;
+	height: 41px;
+	line-height: 41px;
+	background:darkcyan;
+}
+
+.user_nav_l {
+	width: 65%;
+	float: left;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.user_nav_r {
+	width: 296px;
+	padding-top: 5px;
+	float: right;
+}
+
+.uesr_s {
+	width: 239px;
+	height: 31px;
+	line-height: 31px;
+	float: left;
+	background: url(../images/user_s.jpg) no-repeat;
+	border: none;
+	text-indent: 1em;
+}
+
+.uesr_s:focus {
+	background: url(../images/user_s.jpg) no-repeat;
+	border: none;
+}
+
+.uesr_b {
+	width: 51px;
+	height: 31px;
+	float: right;
+	background: url(../images/uesr_sbt.jpg) no-repeat;
+}
+
+.user_cont {
+	width: 1200px;
+	margin-top: 35px;
+	margin-bottom: 0px;
+	margin-left: 80px;
+    margin-right: 10px;
+	
+}
+
+.user_cont_left {
+	width: 231px;
+	float: left;
+	border: 1px solid #e4e2e2;
+	border-top: 5px solid #ff2832;
+margin-right: 15px;
+}
+
+.user_cont_left dl dt {
+	width: 184px;
+	height: 40px;
+	padding-left: 47px;
+	line-height: 40px;
+	border-bottom: 1px solid #e4e2e2;
+	border-top: 1px solid #e4e2e2;
+	background: url(../images/user_j.jpg) no-repeat 15px center #fafafa;
+	color: #000000;
+	font-size: 14px;
+}
+
+.user_cont_left dl dt.jia {
+	background: url(../images/user_jia.jpg) 15px center #fafafa no-repeat;
+}
+
+.user_cont_left dl dd {
+	width: 184px;
+	height: 30px;
+	padding-left: 47px;
+	line-height: 30px;
+}
+
+.user_cont_left dl dd a {
+	color: #716f6f;
+}
+
+.user_cont_left dl dd.active a,.user_cont_left dl dd a:hover {
+	color: #ff2832;
+}
+
+.user_cont_right {
+	width: 940px;
+	border: 1px solid #e4e2e2;
+	float: right;
+}
+
+.user_cont_right .user_lmt {
+	width: 940px;
+	height: 45px;
+	line-height: 45px;
+	background: #fafafa;
+	border-bottom: 1px solid #e4e2e2;
+}
+
+.user_lmt .user_lmt1 {
+	padding-left: 52px;
+	font-size: 16px;
+	color: #000000;
+	float: left;
+	width: 400px;
+}
+
+.user_lmt .user_lmt2 {
+	width: 214px;
+	float: right;
+}
+
+.user_lmt .user_lmt2 .user_lmt21 {
+	float: right;
+	margin-right: 16px;
+	display: inline;
+}
+
+.user_lmt .user_lmt2 .user_lmt22 {
+	float: right;
+	margin-top: 12px;
+	margin-right: 5px;
+	display: inline;
+	width: 70px;
+}
+
+.allxz_c {
+	margin-top: 16px;
+	_margin-top: 12px;
+	display: inline-block;
+	float: left;
+}
+
+
+
+/*fenye*/
+.fenyeys {
+	width: 100%;
+	line-height: 34px;
+	text-align: center;
+	margin: auto;
+	float: right;
+	padding: 20px 0px;
+	font-size: 12px;
+}
+
+.fenyeys a:link,.fenyeys a:visited {
+	padding: 0 14px;
+	background: #FFF;
+	border: solid 1px #dfdfdf;
+	color: #3d3d3d;
+	margin: 0 1px;
+	text-decoration: none;
+	height: 34px;
+	display: inline-block;
+}
+
+.fenyeys a:hover,.fenyeys a.active {
+	background: #ff4400;
+	border: solid 1px #dfdfdf;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.adminMain{
+	width: 940px;
+	height: 625px;
+	
+}

@@ -1,0 +1,289 @@
+package com.ruicaiedu.bookstore.daoImpl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.taglibs.standard.lang.jstl.test.StaticFunctionTests;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
+import com.ruicaiedu.bookstore.dao.Commentdao;
+import com.ruicaiedu.bookstore.domain.Assorter_right;
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.domain.Comment;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.util.DBhelper;
+import com.ruicaiedu.bookstore.util.Document;
+import com.ruicaiedu.bookstore.util.Tool;
+
+public class Commentimpl implements Commentdao {
+	private PreparedStatement pstm;
+	private Comment comment;
+	private ResultSet rs;
+	private List<Comment> list;
+	private Userinfo userinfo=null;
+	private Bookinfo bookinfo=null;
+	private Connection connection=null;
+	//评论添加
+	//public final static String COMMENTIMPLADDCOMMENT="insert into comment(userid,bookid,content,bookname) VALUES(?,?,?,?)";
+	@Override
+	public boolean addComment(Userinfo userinfo, Bookinfo booksinfo,
+			Comment comment) {
+		// TODO Auto-generated method stub
+		try {
+			connection=DBhelper.getConnection();
+			pstm=connection.prepareStatement(Document.COMMENTIMPLADDCOMMENT);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setString(2, booksinfo.getBookid());
+			pstm.setString(3, comment.getContent());
+			pstm.setString(4, booksinfo.getBookname());
+			if(pstm.executeUpdate()>0){
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
+		return false;
+	}
+
+	//查询评论
+		//public final static String COMMENTIMPLSELECTCOMMENT="select * from comment where bookid=? limit ?,8";
+		@Override
+		public List<Comment> selectComment(Bookinfo booksinfo, int pag) {
+			// TODO Auto-generated method stub
+			list=new ArrayList<Comment>();
+			try {
+				connection=DBhelper.getConnection();
+				pstm=connection.prepareStatement(Document.COMMENTIMPLSELECTCOMMENT);
+				pstm.setString(1, booksinfo.getBookid());
+				pstm.setInt(2, (pag-1)*5);
+				
+				rs=pstm.executeQuery();
+				while(rs.next()){
+					Userinfo userinfo=new Userinfo();
+					comment=new Comment();
+					comment.setCommentid(rs.getInt(1));
+					userinfo.setUserid(rs.getInt(2));
+					comment.setUserinfo(userinfo);
+					booksinfo.setBookid(rs.getString(3));
+					comment.setContent(rs.getString(4));				
+					booksinfo.setBookname(rs.getString(5));
+					comment.setBookinfo(booksinfo);	
+					list.add(comment);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			return list;
+		}
+	//删除评论
+	//public final static String COMMENTIMPL_DELETECOMMENT="delete from comment where userid=? and commentid=?;";
+	@Override
+	public boolean deleteComment(Userinfo userinfo, Comment comment) {
+		// TODO Auto-generated method stub
+		try {
+			pstm=DBhelper.getConnection().prepareStatement(Document.COMMENTIMPL_DELETECOMMENT);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setInt(2, comment.getCommentid());
+			if(pstm.executeUpdate()>0){
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				DBhelper.getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	    
+	//public final static String COMMENTIMPL_SELECTCOMMENT_SHOWBYPAGES="select * from comment c,userinfo u  WHERE c.userid=u.userid and c.userid=? ORDER BY commenttime desc LIMIT ?,5";
+/*select * from comment WHERE userid=1
+select * from comment WHERE userid=1 ORDER BY commenttime desc LIMIT 0,5*/
+	//dxp新添加  分页显示我的评论
+		@Override 
+	
+		public List<Comment> selectComment(Userinfo userinfo, int pag) {
+			
+			try {
+				connection=DBhelper.getConnection();
+				pstm=connection.prepareStatement(Document.COMMENTIMPL_SELECTCOMMENT_SHOWBYPAGES);
+			pstm.setInt(1, userinfo.getUserid());
+			pstm.setInt(2, pag);
+			rs=pstm.executeQuery();
+			list=new ArrayList<Comment>();
+			while(rs.next()){
+				comment=new Comment();
+				userinfo=new Userinfo();
+				comment.setCommentid(rs.getInt("commentid"));
+				comment.setBookname(rs.getString("bookname"));
+				comment.setCommenttime(Tool.transDate(rs.getDate("commenttime")));
+				comment.setContent(rs.getString("content"));
+				userinfo.setPicture(rs.getString("picture"));
+				userinfo.setUsername(rs.getString("username"));
+				comment.setUserinfo(userinfo);
+				list.add(comment);
+			}
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
+			return list;
+		}
+		//显示我的所有评论/用于得到总页数 dxp新添加
+		@Override
+		public List<Comment> selectComment(Userinfo userinfo) {
+
+			try {
+				connection=DBhelper.getConnection();
+				pstm=connection.prepareStatement(Document.COMMENTIMPL_SELECTCOMMENT_SHOWALL);
+			pstm.setInt(1, userinfo.getUserid());		
+			rs=pstm.executeQuery();
+			list=new ArrayList<Comment>();
+			while(rs.next()){
+				comment=new Comment();
+				userinfo=new Userinfo();
+				comment.setCommentid(rs.getInt("commentid"));
+				comment.setBookname(rs.getString("bookname"));
+				comment.setCommenttime(Tool.transDate(rs.getDate("commenttime")));
+				comment.setContent(rs.getString("content"));
+				userinfo.setPicture(rs.getString("picture"));
+				userinfo.setUsername(rs.getString("username"));
+				comment.setUserinfo(userinfo);
+				list.add(comment);
+			}
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
+			return list;
+		}
+	
+		
+// 最终版本  select userinfo.username,comment.* from userinfo,comment where userinfo.userid in(select userid from comment where bookid in(select bookid from bookinfo where adminname=?))
+//后台分页查询评论 
+		@Override
+		public List<Comment> selectComment(Assorter_right assorter_right,
+				int page) {
+
+			try {
+				connection=DBhelper.getConnection();
+				pstm=connection.prepareStatement(Document.COMMENTIMPL_SELECTCOMMENT_ASSORTER_RIGHT_BYPAGE);
+			pstm.setString(1, assorter_right.getAdminname());		
+			pstm.setInt(2, page);
+			rs=pstm.executeQuery();
+			list=new ArrayList<Comment>();
+			while(rs.next()){
+				comment=new Comment();
+				userinfo=new Userinfo();
+				comment.setCommentid(rs.getInt("commentid"));
+				comment.setBookname(rs.getString("bookname"));
+				comment.setCommenttime(Tool.transDate(rs.getDate("commenttime")));
+				comment.setContent(rs.getString("content"));
+				userinfo.setUsername(rs.getString("username"));
+				comment.setUserinfo(userinfo);
+				list.add(comment);
+			}
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
+			return list;
+		}
+		//后台 查询全部评论 
+		@Override
+		public List<Comment> selectComment(Assorter_right assorter_right) {
+			try {
+				connection=DBhelper.getConnection();
+				pstm=connection.prepareStatement(Document.COMMENTIMPL_SELECTCOMMENT_ASSORTER_RIGHT_ALL);
+			pstm.setString(1, assorter_right.getAdminname());		
+			rs=pstm.executeQuery();
+			list=new ArrayList<Comment>();
+			while(rs.next()){
+				comment=new Comment();
+				userinfo=new Userinfo();
+				comment.setCommentid(rs.getInt("commentid"));
+				comment.setBookname(rs.getString("bookname"));
+				comment.setCommenttime(Tool.transDate(rs.getDate("commenttime")));
+				comment.setContent(rs.getString("content"));
+				userinfo.setUserid(rs.getInt("userid"));
+				comment.setUserinfo(userinfo);
+				list.add(comment);
+			}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
+			return list;
+		}
+	
+}

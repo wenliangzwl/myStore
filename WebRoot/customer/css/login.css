@@ -1,0 +1,297 @@
+* {
+	font-family: "microsoft yahei",simsun,Tahoma,sans-serif;
+}
+body {
+	margin: 0px; padding: 0px;
+}
+div {
+	margin: 0px; padding: 0px;
+}
+dl {
+	margin: 0px; padding: 0px;
+}
+dt {
+	margin: 0px; padding: 0px;
+}
+dd {
+	margin: 0px; padding: 0px;
+}
+ul {
+	margin: 0px; padding: 0px;
+}
+ol {
+	margin: 0px; padding: 0px;
+}
+li {
+	margin: 0px; padding: 0px;
+}
+h1 {
+	margin: 0px; padding: 0px;
+}
+h2 {
+	margin: 0px; padding: 0px;
+}
+h3 {
+	margin: 0px; padding: 0px;
+}
+h4 {
+	margin: 0px; padding: 0px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+h6 {
+	margin: 0px; padding: 0px;
+}
+pre {
+	margin: 0px; padding: 0px;
+}
+form {
+	margin: 0px; padding: 0px;
+}
+fieldset {
+	margin: 0px; padding: 0px;
+}
+input {
+	margin: 0px; padding: 0px;
+}
+textarea {
+	margin: 0px; padding: 0px;
+}
+p {
+	margin: 0px; padding: 0px;
+}
+blockquote {
+	margin: 0px; padding: 0px;
+}
+th {
+	margin: 0px; padding: 0px;
+}
+td {
+	margin: 0px; padding: 0px;
+}
+fieldset {
+	border: 0px currentColor;
+}
+img {
+	border: 0px currentColor;
+}
+ol {
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+h1 {
+	font-size: 100%;
+}
+h2 {
+	font-size: 100%;
+}
+h3 {
+	font-size: 100%;
+}
+h4 {
+	font-size: 100%;
+}
+h5 {
+	font-size: 100%;
+}
+h6 {
+	font-size: 100%;
+}
+button {
+	font-size: 100%;
+}
+input {
+	font-size: 100%;
+}
+select {
+	font-size: 100%;
+}
+textarea {
+	font-size: 100%;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+i {
+	font-style: normal;
+}
+cite {
+	font-style: normal;
+}
+em {
+	font-style: normal;
+}
+var {
+	font-style: normal;
+}
+dfn {
+	font-style: normal;
+}
+address {
+	font-style: normal;
+}
+body {
+	font-size: 14px;
+}
+a {
+	color: rgb(49, 49, 49); text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	
+}
+a:focus {
+	
+}
+a[href^='http://tongji.baidu.com'] {
+	display: none;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.clearfix::after {
+	height: 0px; clear: both; font-size: 0px; display: block; visibility: hidden; content: ".";
+}
+.clearfix {
+	clear: both; zoom: 1;
+}
+.clear {
+	height: 0px; line-height: 0; clear: both; font-size: 0px;
+}
+.hidden {
+	display: none;
+}
+.none {
+	display: none;
+}
+.padding_nei {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -o-box-sizing: border-box;
+}
+.main01 .sousuo div {
+	border-radius: 17px; -webkit-border-radius: 17px; -moz-border-radius: 17px; -ms-border-radius: 17px; -o-border-radius: 17px;
+}
+.w1100 {
+	margin: 0px auto; width: 1100px; height: auto;
+}
+.w1096 {
+	margin: 0px auto; width: 1096px; height: auto;
+}
+.login_bj {
+	background: url("../images/bgimg.jpg") no-repeat top;
+}
+.zhuce_body {
+	width: 100%; height: auto; float: left;
+}
+.zhuce_body .logo {
+	margin: 53px 0px 0px 65px; width: 114px; height: 54px;
+}
+.zhuce_body .zhuce_kong {
+	left: 50%; top: 50%; width: 600px; height: 478px; margin-top: -239px; margin-left: -300px; position: absolute;
+}
+.zhuce_body .zhuce_kong .zc {
+	width: 600px; height: 408px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai {
+	background: rgb(255, 255, 255); width: 314px; height: 408px; padding-left: 50px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai h3 {
+	font: 16px/70px "Î¢ÈíÑÅºÚ", "ºÚÌå"; width: 270px; text-align: center; color: rgb(51, 51, 51); font-size-adjust: none; font-stretch: normal;
+}
+.zhuce_body .zhuce_kong .zc .bj_right {
+	background: rgb(248, 248, 248); width: 185px; height: 408px; padding-left: 51px; float: left;
+}
+.zhuce_kong > p {
+	font: 16px/70px "Î¢ÈíÑÅºÚ", "ºÚÌå"; text-align: center; color: rgb(255, 255, 255); font-size-adjust: none; font-stretch: normal;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .kuang_txt {
+	border: 1px solid rgb(221, 221, 221); width: 236px; height: 32px; color: rgb(177, 169, 169); line-height: 32px; padding-left: 32px; margin-bottom: 10px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .btn_zhuce {
+	background: rgb(55, 181, 249); border-radius: 3px; border: 0px currentColor; width: 270px; height: 33px; text-align: center; color: rgb(255, 255, 255); line-height: 33px; font-size: 14px; cursor: pointer;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .phone {
+	background: url("../images/zc_06.jpg") no-repeat 10px 10px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .email {
+	background: url("../images/zc_12.jpg") no-repeat 10px 10px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .possword {
+	background: url("../images/zc_16.jpg") no-repeat 10px 10px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .yanzm {
+	background: url("../images/zc_19.jpg") no-repeat 10px 10px; margin-bottom: 0px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .hui_kuang {
+	border: 1px solid rgb(221, 221, 221); width: 97px; height: 31px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai .shuaxin {
+	margin: 0px 0px 0px 150px; width: 14px; height: 14px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai div {
+	width: 100%; line-height: 43px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai div input {
+	margin-top: 15px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai div span {
+	padding-left: 5px;
+}
+.zhuce_body .zhuce_kong .zc .bj_bai div .lan {
+	color: rgb(25, 170, 248); padding-left: 0px;
+}
+.zhuce_body .zhuce_kong .zc .bj_right p {
+	font: 12px/60px ""; width: 135px; color: rgb(153, 153, 153); font-size-adjust: none; font-stretch: normal;
+}
+.zhuce_body .zhuce_kong .zc .bj_right p a {
+	color: rgb(55, 181, 249);
+}
+.zhuce_body .zhuce_kong .zc .bj_right > a {
+	border-radius: 3px; width: 82px; height: 28px; line-height: 28px; padding-left: 51px; margin-bottom: 12px; float: left;
+}
+.zhuce_body .zhuce_kong .zc .bj_right .zhuce_qq {
+	background: url("../images/zc_03.jpg") no-repeat 28px 7px rgb(255, 255, 255); border: 1px solid rgb(55, 181, 249); color: rgb(55, 181, 249);
+}
+.zhuce_body .zhuce_kong .zc .bj_right .zhuce_wb {
+	background: url("../images/zc_10.jpg") no-repeat 28px 7px rgb(255, 255, 255); border: 1px solid rgb(242, 109, 126); color: rgb(242, 109, 126);
+}
+.zhuce_body .zhuce_kong .zc .bj_right .zhuce_wx {
+	background: url("../images/zc_15.jpg") no-repeat 28px 7px rgb(255, 255, 255); border: 1px solid rgb(0, 200, 0); color: rgb(0, 200, 0);
+}
+.zhuce_body .login_kuang {
+	left: 50%; top: 50%; width: 512px; height: 325px; margin-top: -162px; margin-left: -256px; position: absolute;
+}
+.zhuce_body .login_kuang .zc {
+	width: 512px; height: auto;
+}
+.zhuce_body .login_kuang .zc .bj_bai {
+	background: rgb(255, 255, 255); width: 261px; height: 256px; padding-left: 38px; float: left;
+}
+.zhuce_body .login_kuang .zc .bj_bai h3 {
+	font: 16px/70px "Î¢ÈíÑÅºÚ", "ºÚÌå"; width: 270px; text-align: left; color: rgb(55, 181, 249); font-size-adjust: none; font-stretch: normal;
+}
+.zhuce_body .login_kuang .zc .bj_right {
+	background: rgb(248, 248, 248); width: 173px; height: 256px; padding-left: 37px; float: left;
+}
+.zhuce_body .login_kuang .zc .bj_bai .kuang_txt {
+	background: rgb(250, 255, 189); border: 1px solid rgb(221, 221, 221); width: 220px; height: 32px; color: rgb(177, 169, 169); line-height: 32px; padding-left: 4px; margin-bottom: 10px;
+}
+.zhuce_body .login_kuang .zc .bj_bai a {
+	color: rgb(55, 181, 249); margin-right: 35px; float: right;
+}
+.zhuce_body .login_kuang .zc .bj_bai .btn_zhuce {
+	background: rgb(55, 181, 249); border-radius: 3px; border: 0px currentColor; width: 227px; height: 33px; text-align: center; color: rgb(255, 255, 255); line-height: 33px; font-size: 14px; cursor: pointer;
+}
+.zhuce_body .login_kuang .zc .bj_bai .btn_zhuce:hover {
+	background: rgb(0, 101, 208);
+}
+.login_qita_kuang .zc .left .btn_zhuce:hover {
+	background: rgb(0, 101, 208);
+}

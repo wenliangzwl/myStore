@@ -1,0 +1,162 @@
+package com.ruicaiedu.bookstore.domain;
+
+public class Bookinfo implements java.io.Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String bookid;//主键
+	private String bookname;//书名
+	private double bookprice;//价格
+	private double discountprice;//折扣价
+	private String bookimg;//图片
+	private String bookdetails;//详情
+	private double discount;//折扣
+	private String state;//审核状态
+	private String btype;//书籍类型
+	private String deadline;//期限
+	private String major;//适合专业
+	private int grade;//适合年级
+	private String author;//作者
+	private String press;//出版社
+	private String presstime;//出版时间
+	private String isbn;//ISBN号
+	private int score;//购买后可得多少积分
+	private Assorter_right assorter_right;//上传书籍商家名字
+	private String uploadTime;//上传时间
+	private String homeImage;//显示的大图片
+	private int exchange;//是不是可兑换的商品
+	public String getBookid() {
+		return bookid;
+	}
+	public void setBookid(String bookid) {
+		this.bookid = bookid;
+	}
+	public String getBookname() {
+		return bookname;
+	}
+	public void setBookname(String bookname) {
+		this.bookname = bookname;
+	}
+	public double getBookprice() {
+		return bookprice;
+	}
+	public void setBookprice(double bookprice) {
+		this.bookprice = bookprice;
+	}
+	public double getDiscountprice() {
+		return discountprice;
+	}
+	public void setDiscountprice(double discountprice) {
+		this.discountprice = discountprice;
+	}
+	public String getBookimg() {
+		return bookimg;
+	}
+	public void setBookimg(String bookimg) {
+		this.bookimg = bookimg;
+	}
+	public String getBookdetails() {
+		return bookdetails;
+	}
+	public void setBookdetails(String bookdetails) {
+		this.bookdetails = bookdetails;
+	}
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getBtype() {
+		return btype;
+	}
+	public void setBtype(String btype) {
+		this.btype = btype;
+	}
+	public String getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPress() {
+		return press;
+	}
+	public void setPress(String press) {
+		this.press = press;
+	}
+	public String getPresstime() {
+		return presstime;
+	}
+	public void setPresstime(String presstime) {
+		this.presstime = presstime;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public Assorter_right assorter_right() {
+		return assorter_right;
+	}
+	public void setAssorter_right(Assorter_right assorter_right) {
+		this.assorter_right = assorter_right;
+	}
+	public String getUploadTime() {
+		return uploadTime;
+	}
+	public void setUploadTime(String uploadTime) {
+		this.uploadTime = uploadTime;
+	}
+	public String getHomeImage() {
+		return homeImage;
+	}
+	public void setHomeImage(String homeImage) {
+		this.homeImage = homeImage;
+	}
+	public int getExchange() {
+		return exchange;
+	}
+	public void setExchange(int exchange) {
+		this.exchange = exchange;
+	}
+	
+	
+	
+	
+}

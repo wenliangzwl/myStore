@@ -1,0 +1,57 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruicaiedu.bookstore.domain.Comment;
+import com.ruicaiedu.bookstore.domain.Userinfo;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+@WebServlet("/User_myCommentServlet")
+public class User_myCommentServlet extends HttpServlet {
+Bookstorservicedao bookstorservicedao=null;
+	Comment comment=null;
+	Userinfo userinfo=null;
+	public User_myCommentServlet() {
+		super();
+	}
+
+	
+	public void destroy() {
+		super.destroy(); 
+		
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		bookstorservicedao=new Bookstorserviceimpl();
+	       int pageIndex=1;
+	       if(request.getParameter("pageIndex")!=null){
+	    	   pageIndex=Integer.parseInt(request.getParameter("pageIndex"));
+	       }	   
+	   userinfo=(Userinfo)request.getSession().getAttribute("userinfo");
+       request.setAttribute("comments",bookstorservicedao.selectComment(userinfo, 3));
+       request.setAttribute("pageIndex", pageIndex);
+       request.setAttribute("totalpage",bookstorservicedao.getTotalPage(bookstorservicedao.selectComment(userinfo), 3));
+       request.getRequestDispatcher("/customer/user_myComment.jsp").forward(request, response);
+       
+		
+		
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+doGet(request, response);
+	}
+
+	public void init() throws ServletException {
+		
+	}
+
+}

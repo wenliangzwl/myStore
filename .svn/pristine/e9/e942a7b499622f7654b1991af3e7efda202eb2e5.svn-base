@@ -1,0 +1,78 @@
+package com.ruicaiedu.bookstore.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ruicaiedu.bookstore.domain.Bookinfo;
+import com.ruicaiedu.bookstore.domain.Item;
+import com.ruicaiedu.bookstore.serviceDao.Bookstorservicedao;
+import com.ruicaiedu.bookstore.serviceDaoImpl.Bookstorserviceimpl;
+
+public class BuyServlet extends HttpServlet {
+	private Bookstorservicedao dao;
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		Bookinfo bookinfo= new Bookinfo();
+		
+		HttpSession session = request.getSession();
+		String bookid="2";
+		if(request.getParameter("bookid")!=null){//说明有数据传过来
+			
+			bookid = request.getParameter("bookid");//接受用户想要加入购物车的书			
+		}		
+		bookinfo.setBookid(bookid);		
+		//System.out.println(bookinfo.getBookid());
+		//得到书的详情,装人bookinfo里面
+		dao = new Bookstorserviceimpl();
+		Bookinfo bookinfos=new Bookinfo();
+		bookinfos = dao.selectbookinfodetails(bookinfo);
+
+		
+		//第一次从购物车中拿 ，一定是空的的null
+		List<Item> items = 	(List)session.getAttribute("shoppingcar");
+		
+		boolean flag = false;//没买过的		
+			if(items==null){//还没有购物车,实例化一个集合，准备放session购物车
+				items = new ArrayList<Item>();	
+			}
+			for(int i=0;i<items.size();i++){
+				Item item = items.get(i);
+				if(item.getBookinfo().getBookid()==bookid){//说明已经选个这本书，购物车里面已存在
+					item.setAccount(item.getAccount()+1);
+					flag=true;//有相同的
+					items.set(i,item);//替换，放入数量修改后的商品
+					break;
+				}
+			}
+			if(flag==false){//说明没买个
+				Item item = new Item();
+				item.setAccount(1);//默认数量为1
+				item.setBookinfo(bookinfos);
+				items.add(item);//放一个新商品				
+				//System.out.println("测试的值"+item.getBookinfo().getBookid());
+			}	
+						
+		//放到session购物车里面：
+		session.setAttribute("shoppingcar", items);
+		response.sendRedirect("customer/buy.jsp");//去购物车页面显示
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	public void init() throws ServletException {
+		// Put your code here
+	}
+}
